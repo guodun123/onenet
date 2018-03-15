@@ -6,9 +6,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>a</title> 
 	</head>
-	<script src="../../resources/js/layui.js" charset="utf-8"></script>
+	<script src="../../resources/layui/layui.js" charset="utf-8"></script>
+	<script src="../../resources/layui/layui.all.js" charset="utf-8"></script>
 	<script src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
-	<link rel="stylesheet" href="../../resources/css/layui.css" />
+	<link rel="stylesheet" href="../../resources/layui/css/layui.css" />
 	<link rel="stylesheet" href="../../resources/css/login.css" />
 	<body background="../../resources/img/back.jpg">
 		<div id="login_back">
