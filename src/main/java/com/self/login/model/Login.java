@@ -1,27 +1,27 @@
 package com.self.login.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
+@Getter
+@Setter
 public class Login {
 
     private String userName;
 
     private String password;
 
-    public String getUserName() {
-        return userName;
-    }
+    private Integer status;
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    private Date createdTime;
 
-    public String getPassword() {
-        return password;
-    }
+    private Date updatedTime;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    private String remark;
+
+    private Integer isDeleted;
 }

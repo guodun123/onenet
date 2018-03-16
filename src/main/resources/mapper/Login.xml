@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.daxia.mizar.wholesale.deliveryorder.dao.SoDAO">
+    <resultMap id="BaseResultMap" type="com.daxia.mizar.wholesale.deliveryorder.model.So">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="auditRemark" property="auditRemark" jdbcType="VARCHAR"/>
+        <result column="invoice_tax_no" property="invoiceTaxNo" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    </sql>
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pf_so so
+        where id = #{id,jdbcType=BIGINT} and is_deleted = 0
+    </select>
+
+    <select id="selectByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from pf_so so
+        where code = #{code}
+    </select>
+
+    <insert id="insert" parameterType="com.daxia.mizar.wholesale.deliveryorder.model.So">
+        insert into pf_so
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="merchantId != null" >
+                #{merchantId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="com.daxia.mizar.wholesale.deliveryorder.model.So">
+        update pf_so
+        <set>
+            <if test="invoiceTaxNo != null" >
+                invoice_tax_no = #{invoiceTaxNo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <sql id="queryCondition">
+    </sql>
+
+    <update id="deleteByIds" parameterType="map">
+        update pf_so
+        set is_deleted=1, update_time = #{updateTime},updated_by = #{updatedBy}
+        where id in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <update id="delByIds" parameterType="map">
+        update pf_so
+        set is_deleted=1, update_time = #{updateTime},updated_by = #{updatedBy},updater_code=#{updaterCode},updater_name=#{updaterName}
+        where id in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <delete id="removeByIds">
+        delete from pf_so
+        where id in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="selectByCondition" parameterType="com.daxia.mizar.wholesale.deliveryorder.model.So"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from pf_so so
+        <include refid="queryCondition"/>
+    </select>
+
+    <select id="selectDeliveryNeedSyn2Platform" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List" />
+        from pf_so so
+        where so.status = 8
+        AND so.is_deleted = 0
+        <if test="soId != null">
+            AND so.id <![CDATA[<]]> #{soId}
+        </if>
+        AND so.update_time >#{updateTime}
+        order by so.id desc
+        limit #{limitNum}
+    </select>
+
+</mapper>
