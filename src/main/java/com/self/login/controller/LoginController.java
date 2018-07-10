@@ -19,4 +19,7 @@ public class LoginController {
     public void login(Login login){
 
     }
+    public static void main(String[] args) {
+
+    }
 }
